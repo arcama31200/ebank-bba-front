@@ -1,0 +1,24 @@
+# Exclure le répertoire node_modules
+node_modules/
+
+# Exclure les répertoires de build et de cache
+dist/
+build/
+coverage/
+
+# Exclure les fichiers de configuration locaux
+.env
+.vscode/
+.editorconfig
+
+# Exclure les fichiers de versionnement et de documentation
+.git/
+.gitignore
+README.md
+LICENSE
+
+# Exclure les fichiers de logs et de débogage
+npm-debug.log
+
+#Exclure le fichier plaintext montrant la structure des images docker
+plaintext
