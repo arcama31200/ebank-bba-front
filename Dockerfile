@@ -1,15 +1,21 @@
-# Utilisation de l'image de base Node.js
-FROM node:20.14.0
+# frontend/Dockerfile
+# Utilisation de l'image Node.js 20.14.0 avec Alpine
+FROM node:20.14.0-alpine
 
-# Définir le répertoire de travail dans le conteneur
+# Définition du répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copier les fichiers package.json et package-lock.json et installer les dépendances
-COPY package*.json ./
+# Copie des fichiers package.json et package-lock.json pour installer les dépendances
+COPY package.json package-lock.json ./
+
+# Installation des dépendances
 RUN npm install
 
-# Exposer le port 4200
+# Copie de tout le code source dans le conteneur
+COPY . .
+
+# Exposer le port 4200 utilisé par Angular
 EXPOSE 4200
 
-# Commande par défaut pour démarrer l'application Angular avec le mode watch
+# Commande pour démarrer l'application Angular en mode développement
 CMD ["npm", "start"]
