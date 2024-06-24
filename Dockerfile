@@ -1,5 +1,5 @@
 # frontend/Dockerfile
-# Utilisation de l'image Node.js 20.14.0 avec Alpine
+# Utilisation de l'image de base Node.js 20.14.0 avec Alpine
 FROM node:20.14.0-alpine
 
 # Définition du répertoire de travail dans le conteneur
