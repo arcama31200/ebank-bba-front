@@ -1,12 +1,12 @@
 # frontend/Dockerfile
 # Utilisation de l'image de base Node.js 20.14.0 avec Alpine
-FROM node:20.14.0-alpine
+FROM node:latest
 
 # Définition du répertoire de travail dans le conteneur
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copie des fichiers package.json et package-lock.json pour installer les dépendances
-COPY package.json package-lock.json ./
+COPY . /usr/src/app
 
 # Installation des dépendances
 RUN npm install
@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 4200
 
 # Commande pour démarrer l'application Angular en mode développement
-CMD ["npm", "start"]
+CMD ["ng", "serve", "--host", "0.0.0.0"]
