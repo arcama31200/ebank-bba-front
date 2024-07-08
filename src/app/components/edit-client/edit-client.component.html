@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">Modifier client : {{clientId}}</div>
+        <div class="card-body">
+            <form [formGroup]="editCustomerFormGroup" (ngSubmit)="handleUpdateCustomer()">
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    <input type="text" formControlName="nom" class="form-control"/>
+                    <span class="text-danger" *ngIf="editCustomerFormGroup.controls['nom'].touched 
+                                                && editCustomerFormGroup.controls['nom'].errors 
+                                                && editCustomerFormGroup.controls['nom'].errors!['required']">
+                        Le nom est requis
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Prenom</label>
+                    <input type="text" formControlName="prenom" class="form-control"/>
+                    <span class="text-danger" *ngIf="editCustomerFormGroup.controls['email'].touched 
+                                                && editCustomerFormGroup.controls['prenom'].errors 
+                                                && editCustomerFormGroup.controls['prenom'].errors!['required']">
+                        Le prénom est requis
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" formControlName="email" class="form-control"/>
+                    <span class="text-danger" *ngIf="editCustomerFormGroup.controls['email'].touched 
+                                                && editCustomerFormGroup.controls['email'].errors 
+                                                && editCustomerFormGroup.controls['email'].errors!['email']">
+                        L'Email' est requis
+                    </span>
+                </div>
+                <button [disabled]="!editCustomerFormGroup.valid" class="btn btn-info">Save</button>
+            </form>
+        </div>
+    </div>
+</div>

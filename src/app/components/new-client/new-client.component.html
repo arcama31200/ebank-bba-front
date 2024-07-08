@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">Nouveau client</div>
+        <div class="card-body">
+            <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleNewCustomer()">
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    <input type="text" formControlName="nom" class="form-control"/>
+                    <span class="text-danger" *ngIf="newCustomerFormGroup.controls['nom'].touched 
+                                                && newCustomerFormGroup.controls['nom'].errors 
+                                                && newCustomerFormGroup.controls['nom'].errors!['required']">
+                        Le nom est requis
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Prenom</label>
+                    <input type="text" formControlName="prenom" class="form-control"/>
+                    <span class="text-danger" *ngIf="newCustomerFormGroup.controls['email'].touched 
+                                                && newCustomerFormGroup.controls['prenom'].errors 
+                                                && newCustomerFormGroup.controls['prenom'].errors!['required']">
+                        Le prénom est requis
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" formControlName="email" class="form-control"/>
+                    <span class="text-danger" *ngIf="newCustomerFormGroup.controls['email'].touched 
+                                                && newCustomerFormGroup.controls['email'].errors 
+                                                && newCustomerFormGroup.controls['email'].errors!['email']">
+                        L'Email' est requis
+                    </span>
+                </div>
+                <button [disabled]="!newCustomerFormGroup.valid" class="btn btn-info">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
