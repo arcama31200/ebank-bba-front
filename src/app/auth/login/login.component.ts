@@ -21,21 +21,15 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
-
-  onSubmit(): void {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      this.authService.login(username, password).subscribe({
-        next: (success: boolean) => { // Spécifiez le type de 'success' comme boolean
-          if (success) {
-            this.router.navigateByUrl('/clients');
-          } else {
-            this.errorMessage = "L'identifiant ou le mot de passe sont invalides !";
-            alert(this.errorMessage);
-            this.router.navigateByUrl('/login');
-          }
-        }
-      });
-    }
+  handleLogin(){
+    let username = this.loginForm.value.username;
+    let pwd = this.loginForm.value.password;
+    this.authService.login(username, pwd).subscribe({
+      next: data=>{
+        this.authService.loadProfile(data);
+        this.router.navigateByUrl("/admin");
+      },
+      error: err => console.log(err)
+    })
   }
 }

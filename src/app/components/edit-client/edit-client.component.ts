@@ -48,7 +48,7 @@ export class EditClientComponent implements OnInit{
       {
         next: data=>{
           alert("Le client " + data.nom + " a bien été modifié ! ");
-          this.router.navigateByUrl("/clients")
+          this.router.navigateByUrl("admin/clients")
         },
         error: err =>{
           console.log(err.message);

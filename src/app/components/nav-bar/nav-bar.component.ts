@@ -11,17 +11,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
-  constructor(private authService: AuthService, private router: Router){}
-
-  logout(): void{
+  constructor(public authService: AuthService, private router: Router){}
+  handleLogout(){
     this.authService.logout();
-  }
-
-  isLoggedIn(): boolean{
-    return this.authService.isAuthenticated();
-  }
-
-  getUserName(): string | null{
-    return this.authService.getUsername();
+    this.router.navigateByUrl("/login");
   }
 }

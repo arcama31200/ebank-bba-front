@@ -27,7 +27,7 @@ export class NewClientComponent implements OnInit{
       {
         next: data=>{
           alert("Le client " + data.nom + " a bien été ajouté ! ");
-          this.router.navigateByUrl("/clients")
+          this.router.navigateByUrl("admin/clients")
         },
         error: err =>{
           console.log(err.message);

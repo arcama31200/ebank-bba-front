@@ -37,17 +37,17 @@ export class ClientsComponent implements OnInit{
     )
   }
   handleEditCustomer(id: number){
-    this.router.navigateByUrl("/editer/"+id);
+    this.router.navigateByUrl("admin/editer/"+id);
   }
   goToNewCust(){
-    this.router.navigateByUrl("/nouveau");
+    this.router.navigateByUrl("admin/nouveau");
   }
   handleDeleteCustomer(id: number){
     this.clientService.deleteCustomer(id).subscribe({
       next: ()=> {
 
         alert("Le client " + id + "a bien été supprimé");
-        this.router.navigateByUrl("/clients");
+        this.router.navigateByUrl("admin/clients");
       },
       error: err =>{
         console.log(err.message)

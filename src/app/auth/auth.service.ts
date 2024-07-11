@@ -1,58 +1,41 @@
 // auth.service.ts
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { Injectable} from '@angular/core';
 import { environment } from '../../environment/environment';
-import { HttpClient } from '@angular/common/http';
-import {isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: HttpClient) { }
-
-  isAuthenticated(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      // Code exécuté uniquement côté navigateur
-      return localStorage.getItem('token') !== null;
+  isAuthenticated: boolean = false;
+  roles : any;
+  username: any;
+  access_token!: any;
+  constructor(private http: HttpClient){}
+  public login(username: string, password: string){
+    let params =  new HttpParams().set("username", username).set("password", password);
+    let options = {
+      headers : new HttpHeaders().set("Content-Type", "application/x-www-form-urlencoded")
     }
-    return false; // Gestion alternative pour SSR ou environnement non-browser
+    return this.http.post(environment.ebankApiUrl + "/auth/login", params, options);
   }
-
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${environment.ebankApiUrl}/login`, { username, password }).pipe(
-      tap(response => {
-        localStorage.setItem('token', response.token); // Stockez le token JWT dans localStorage
-      })
-    );
+  public loadProfile(data: any){
+    this.isAuthenticated = true;
+    this.access_token = data['access-token'];
+    console.log("valeur de this.azccesstoken", data);
+    let decodedJwt:any = jwtDecode(this.access_token);
+    this.username = decodedJwt.sub;
+    this.roles = decodedJwt.scope;
+    console.log("valeur de this.roles", this.roles);
+  
   }
-
-  logout(): void {
-    // Supprime le token d'authentification du localStorage lors de la déconnexion
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('token');
-    }
-  }
-
-  getUsername(): string | null {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const payload = this.decodeJwt(token); // Décoder le token JWT pour obtenir le payload
-      return payload ? payload.username : null; // Retournez le nom d'utilisateur depuis le payload du token
-    }
-    return null; // Retournez null si aucun token n'est présent ou s'il n'y a pas de champ 'username'
-  }
-
-  private decodeJwt(token: string): any {
-    const base64Url = token.split('.')[1]; // Récupère la deuxième partie du token JWT (le payload)
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Remplace les caractères spéciaux pour décoder correctement
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join('')); // Décodage du payload Base64 en JSON
-    
-    return JSON.parse(jsonPayload); // Parse le JSON et retourne l'objet résultant
+  public logout(){
+    this.isAuthenticated = false;
+    this.access_token = undefined;
+    this.username = undefined;
+    this.roles = undefined;
   }
   
 }
