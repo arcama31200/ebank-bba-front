@@ -15,7 +15,7 @@ export const routes: Routes = [
     {path: "login", component: LoginComponent},
     {path: "", redirectTo: "/login", pathMatch: "full"},
     {path: "admin", component: AdminTemplateComponent, canActivate: [authenticationGuard], children : [
-        {path: "home", component: HomeComponent},
+        {path:"home", component: HomeComponent},
         {path:"clients", component: ClientsComponent},
         {path:"comptes", component: ComptesComponent},
         {path:"nouveau", component: NewClientComponent, canActivate: [authorizationGuard], data: {role:"ADMIN"} },
