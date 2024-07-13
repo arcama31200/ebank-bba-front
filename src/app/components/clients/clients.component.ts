@@ -54,5 +54,8 @@ export class ClientsComponent implements OnInit{
         // TODO : Créer un composant qui affiche les erreurs (un toast)
       }
     })
-  };
+  }
+  handleCustomerAccounts(customer: Client) {
+    this.router.navigateByUrl("admin/customer-accounts/"+customer.id,{state :customer});
+  }
 } 

@@ -32,12 +32,17 @@
 					</thead>
 					<tbody>
 						<tr *ngFor="let client of clients$ | async">
-						<th scope="row">{{ client.id }}</th>
-						<td>{{ client.nom }}</td>
-						<td>{{client.prenom}}</td>
-						<td>{{ client.email }}</td>
-						<td><button class="btn btn-info" (click)="handleEditCustomer(client.id)"><i class="bi bi-pencil"></i></button></td>
-						<td><button class="btn btn-outline-danger" (click)="handleDeleteCustomer(client.id)"><i class="bi bi-trash"></i></button></td>
+							<th scope="row">{{ client.id }}</th>
+							<td>{{ client.nom }}</td>
+							<td>{{client.prenom}}</td>
+							<td>{{ client.email }}</td>
+							<td><button class="btn btn-info" (click)="handleEditCustomer(client.id)"><i class="bi bi-pencil"></i></button></td>
+							<td><button class="btn btn-outline-danger" (click)="handleDeleteCustomer(client.id)"><i class="bi bi-trash"></i></button></td>
+							<td>
+								<button (click)="handleCustomerAccounts(client)" class="btn btn-success">
+								Accounts
+								</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>

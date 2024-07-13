@@ -10,6 +10,7 @@ import { AdminTemplateComponent } from './components/admin-template/admin-templa
 import { authenticationGuard } from './guards/authentication.guard';
 import { authorizationGuard } from './guards/authorization.guard';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
+import { CustomerAccountsComponent } from './components/customer-accounts/customer-accounts.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -20,6 +21,7 @@ export const routes: Routes = [
         {path:"comptes", component: ComptesComponent},
         {path:"nouveau", component: NewClientComponent, canActivate: [authorizationGuard], data: {role:"ADMIN"} },
         {path:"editer/:id", component: EditClientComponent, canActivate: [authorizationGuard], data: {role:"ADMIN"}},
+        {path :"customer-accounts/:id", component : CustomerAccountsComponent},
         {path: 'NotAuthorized', component: NotAuthorizedComponent}
     ]},
     {path: '**', component: NotFoundComponent}, //Rediriger toutes les autres routes vers /home

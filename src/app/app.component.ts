@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,10 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'ebank-front';
+  constructor(private authService: AuthService){}
+  ngOnInit(): void {
+      this.authService.loadJwtTokenFromLocalStorage();
+  }
 }
