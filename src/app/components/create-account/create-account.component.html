@@ -1,0 +1,39 @@
+<!-- create-account.component.html -->
+<div class="container mt-2">
+    <div class="card">
+      <div class="card-header">Create Account</div>
+      <div class="card-body">
+        <form [formGroup]="accountFormGroup" (ngSubmit)="handleCreateAccount()">
+          <div class="mb-3">
+            <label class="form-label">Type</label>
+            <select formControlName="type" class="form-control">
+                <option>CC</option>
+                <option>CE</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Identifiant Bancaire</label>
+            <input type="text" formControlName="identifiantBancaire" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <input type="text" formControlName="description" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Solde</label>
+            <input type="number" formControlName="solde" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Client ID</label>
+            <select formControlName="clientId" class="form-control">
+                <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }}</option>
+            </select>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-success">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

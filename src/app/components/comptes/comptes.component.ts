@@ -5,6 +5,7 @@ import { AccountDetails } from '../../models/account.model';
 import { AccountsService } from '../../services/accounts.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comptes',
@@ -18,11 +19,11 @@ export class ComptesComponent implements OnInit{
   accountFormGroup! : FormGroup;
   currentPage : number =0;
   pageSize : number =5;
-  accountObservable! : Observable<AccountDetails>
+  accountObservable! : Observable<AccountDetails>;
   operationFromGroup! : FormGroup;
   errorMessage! :string ;
 
-  constructor(private fb : FormBuilder, private accountService : AccountsService, public authService: AuthService) { }
+  constructor(private fb : FormBuilder, private accountService : AccountsService, public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.accountFormGroup=this.fb.group({
@@ -36,11 +37,11 @@ export class ComptesComponent implements OnInit{
     })}
 
   handleSearchAccount() {
-    let accountId : string =this.accountFormGroup.value.accountId;
-    this.accountObservable=this.accountService.getAccount(accountId,this.currentPage, this.pageSize).pipe(
+    let keyword: string = this.accountFormGroup.value.keyword;
+    this.accountObservable = this.accountService.searchAccounts(keyword).pipe(
       catchError(err => {
-        this.errorMessage=err.message;
-        return throwError(()=>new Error(err));
+        this.errorMessage = err.message;
+        return throwError(() => new Error(err));
       })
     );
   }
@@ -92,5 +93,8 @@ export class ComptesComponent implements OnInit{
       });
 
     }
+  }
+  navigateToCreateAccount() {
+    this.router.navigate(['/admin/create-account']);
   }
 }
